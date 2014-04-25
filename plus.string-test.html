@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>test plus.string.js</title>
+	<link href="http://code.jquery.com/qunit/qunit-git.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+	<div id="qunit"></div>
+	<div id="qunit-fixture"></div>
+	<script src="http://code.jquery.com/qunit/qunit-git.js"></script>
+	<script src="./plus.string.js"></script>
+	<script>
+		var S = _.string,
+			passed = 'okay';
+			
+		test('capitalize', function () {
+			ok(S.capitalize('singno') === 'Singno', passed);
+		});
+
+		test('titleize', function () {
+			ok(S.titleize(' my name is singno ') === ' My Name Is Singno ', passed);
+		});
+
+		test('format', function () {
+			ok(S.format('{name}.{ext}', {
+				name: 'string',
+				ext: 'js'
+			}) === 'string.js', passed);
+		});
+
+		test('trim', function () {
+			ok(S.trim(' foobar  ') === 'foobar', passed);
+		});
+
+		test('trimLeft', function () {
+			ok(S.trimLeft('  foobar ') === 'foobar ', passed);	
+		});
+
+		test('trimRight', function () {
+			ok(S.trimRight(' foobar  ') === ' foobar', passed);
+		});
+
+		test('clean', function () {
+			ok(S.clean('  my name   is   singno ') === 'my name is singno', passed);
+		});
+
+		test('swapCase', function () {
+			ok(S.swapCase('hELLO') === 'Hello', passed);
+		});
+
+		test('escapeHTML', function () {
+			ok(S.escapeHTML('<>&\'"') === '&lt;&gt;&amp;&#x27;&quot;', passed);
+		});
+
+		test('unescapeHTML', function () {
+			ok(S.unescapeHTML('&lt;&gt;&amp;&#x27;&quot;&#162;&#xa2;') === '<>&\'"¢¢', passed);
+		});
+
+		test('toHTMLEntity', function () {
+			equal(S.toHTMLEntity('>&'), '&#62;&#38;');
+			equal(S.toHTMLEntity('>&', 16), '&#x3e;&#x26;');
+		});
+
+		test('fromHTMLEntity', function () {
+			equal(S.fromHTMLEntity('&#62;&#38;'), '>&');
+			equal(S.fromHTMLEntity('&#x3e;&#x26;'), '>&');
+		});
+
+		test('toUnicode', function () {
+			equal(S.toUnicode('bar'), '\\u0062\\u0061\\u0072');
+		});
+
+		test('fromUnicode', function () {
+			equal(S.fromUnicode('\\u0062\\u0061\\u0072'), 'bar');
+		});
+
+		test('reverse', function () {
+			ok(S.reverse('foobar') === 'raboof', passed);
+		});
+
+		test('splice', function () {
+			ok(S.splice('foobar', 3, 2, 'ab') === 'fooabr', passed);
+			ok(S.splice('foobar', '3', '2', 'ab') === 'fooabr', passed);
+			ok(S.splice('foobar', 10, 2, 'add') === 'foobaradd', passed);
+			ok(S.splice('foobar', -2, 2, 'ab') === 'foobab', passed);
+		});
+
+		test('insert', function () {
+			ok(S.insert('tab', 1, 'c') === 'tcab', passed);
+			ok(S.insert('tab', 1000, 'c') === 'tabc', passed);
+			ok(S.insert('tab', -1, 'c') === 'tacb', passed);
+		});
+
+		test('camelize', function () {
+			ok(S.camelize('margin-top') === 'marginTop', passed);
+			ok(S.camelize('margin_top') === 'marginTop', passed);
+			ok(S.camelize('-webkit-border-radius') === 'WebkitBorderRadius', passed);
+			ok(S.camelize('_webkit_border_radius') === 'WebkitBorderRadius', passed);
+			ok(S.camelize(' webkit border radius ') === 'webkitBorderRadius', passed);
+		});
+
+		test('classify', function () {
+			ok(S.classify('some_class_name') === 'SomeClassName', passed);
+			ok(S.classify('__some__class_name') === 'SomeClassName', passed);
+			equal(S.classify('some class name'), 'SomeClassName');
+		});
+
+		test('underscored', function () {
+			ok(S.underscored('margin-top') === 'margin_top', passed);
+			ok(S.underscored('marginTop') === 'margin_top', passed);
+			ok(S.underscored('MarginTop') === 'margin_top', passed);
+			equal(S.underscored('margin  top'), 'margin_top');
+		});
+
+		test('dasherize', function () {
+			ok(S.dasherize('marginTop') === 'margin-top',  passed);
+			ok(S.dasherize('margin_Top') === 'margin-top',  passed);
+			ok(S.dasherize('WebkitBorderRadius') === '-webkit-border-radius',  passed);
+		});
+
+		test('humanize', function () {
+			ok(S.humanize('  capitalize dash-CamelCase_underscore trim  ') === 'Capitalize dash camel case underscore trim', passed);
+		});
+
+		test('truncate', function () {
+			ok(S.truncate('hello world', 5) === 'hello...');
+			ok(S.truncate('hello world', 5 , '$$$') === 'hello$$$');
+			ok(S.truncate('hello'), 5, 'hello');
+			ok(S.truncate('hello'), 4, 'hell...');
+		});
+
+		test('repeat', function () {
+			ok(S.repeat('a', 5) === 'aaaaa', passed);
+		});
+
+		test('surround', function () {
+			ok(S.surround('abc', '$') === '$abc$', passed);
+		});
+
+		test('pad', function () {
+			ok(S.pad('abc', 3) === '   abc', passed);
+			ok(S.pad('abc', 3, '$', 'left') === '$$$abc', passed);
+			ok(S.pad('abc', 3, null, 'right') === 'abc   ', passed);
+			ok(S.pad('abc', 3, null, 'both') === '   abc   ', passed);
+		});
+
+		test('lpad', function () {
+			ok(S.lpad('abc', 3) === '   abc', passed);
+		});
+
+		test('rpad', function () {
+			ok(S.rpad('abc', 3) === 'abc   ', passed);
+		});
+
+		test('lrpad', function () {
+			ok(S.lrpad('abc', 3) === '   abc   ', passed);
+		});
+
+		test('strRight', function () {
+			ok(S.strRight('foobarfoobar', 'foo') === 'barfoobar', passed);
+			ok(S.strRight('foobarfoobar', 'foo', 1) === 'bar', passed);
+			equal(S.strRight('f-g-h', '-', 2), 'h');
+		});
+
+		test('strRightBack', function () {
+			equal(S.strRightBack('foobar-abc', '-'), 'abc');
+			equal(S.strRightBack('f-g-h', '-', 2), 'g-h');
+		});
+
+		test('strLeft', function () {
+			equal(S.strLeft('foobarfoobar', 'bar'), 'foo');
+			equal(S.strLeft('foobarfoobar', 'bar', 4), 'foobarfoo');
+		});
+
+		test('strLeftBack', function () {
+			equal(S.strLeftBack('foobar-abc', '-'), 'foobar');
+			equal(S.strLeftBack('f-f-f', '-', 1), 'f');
+			equal(S.strLeftBack('f-f-f', '-', 0), 'f-f-f');
+		});
+
+		test('stripTags', function () {
+			equal(S.stripTags('<abc>321</abc><input value="a" /><span>123</span>'), '321123');
+		});
+
+		test('escapeRegExp', function () {
+			equal(S.escapeRegExp('.*+?^=!:${}()|[]/\\'), '\\.\\*\\+\\?\\^\\=\\!\\:\\$\\{\\}\\(\\)\\|\\[\\]\\/\\\\');
+		});
+
+		test('count', function () {
+			equal(S.count('foofoo', 'o'), 4);
+		});
+
+		test('isBlank', function () {
+			ok(S.isBlank(''), passed);
+		});
+
+		test('startsWith', function () {
+			ok(S.startsWith('foobar', 'foo'), passed);
+		});
+
+		test('endsWith', function () {
+			ok(S.endsWith('foobar', 'bar'), passed);
+		});
+
+		test('chop', function () {
+			deepEqual(S.chop('1112223334', 3), ['111', '222', '333', '4']);
+			deepEqual(S.chop('1234'), ['1', '2', '3', '4']);
+		});
+		
+		test('chain', function () {
+			equal(S(' chain test, cut right string  ').chain().trim().titleize().strLeft(',').swapCase().value(), 'cHAIN tEST');
+		});
+
+		test('isUpper', function () {
+			ok(S.isUpper('A'), passed);
+			ok(!S.isUpper('a'), passed);
+		});
+
+		test('isLower', function () {
+			ok(!S.isLower('A'), passed);
+			ok(S.isLower('a'), passed);
+		});
+	</script>
+</body>
+</html>
