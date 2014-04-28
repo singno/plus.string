@@ -272,28 +272,28 @@ _.string.splice 方法向/从字符串中添加/删除字符串，然后返回�
 	_.string.startsWith('hello world', 'hello');
 	=> true
 	
-_.string.endsWith(str, substr)
+#### _.string.endsWith(str, substr)
 
 判断字符串是否以子字符串结尾。
 
 	_.string.endsWith('hello world', 'world');
 	=> true
 
-_.string.chop(str, step)
+#### _.string.chop(str, step)
 
 将字符串按每组长度为step分为n段。
 
 	_.string.chop('abcefghi', 3);
 	=> ['abc', 'efg', 'hi']
 	
-_.string.isUpper(str)
+#### _.string.isUpper(str)
 
 判断字符是否是大写字母。
 
 	_.string.isUpper('ABC');
 	=> true
 	
-_.string.isLower(str)
+#### _.string.isLower(str)
 
 判断字符是否是小写字母。
 
