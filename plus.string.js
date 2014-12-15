@@ -433,6 +433,21 @@
 		escapeRegExp: function (str) {
 			str += '';
 			return str.replace(rescapeRegExp, '\\$1');
+		},
+
+		charLength: function (str) {
+			str += '';
+			var count = 0;
+
+			for (var i = 0, len = str.length; i < len; i++) {
+				if (str[i].charCodeAt(i) > 255) {
+					count += 2;
+				} else {
+					count++;
+				}
+			}
+
+			return count;
 		}
 	});
 

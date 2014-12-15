@@ -300,6 +300,13 @@ _.string.splice 方法向/从字符串中添加/删除字符串，然后返回�
 	_.string.isLower('abc');
 	=> true
 	
+#### _.string.charLength(str)
+
+计算字符串长度。
+
+	_.string.charLength('测1');
+	=> 3
+	
 
 	
 
