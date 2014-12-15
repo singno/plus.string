@@ -440,7 +440,7 @@
 			var count = 0;
 
 			for (var i = 0, len = str.length; i < len; i++) {
-				if (str[i].charCodeAt(i) > 255) {
+				if (str.charCodeAt(i) > 255) {
 					count += 2;
 				} else {
 					count++;
